@@ -72,7 +72,7 @@ export class UserListComponent implements OnInit, OnDestroy  {
       },
       // If we observe an error in that Observable, put it in the console so we can learn more
       error: (e) => {
-        this.snackBar.open(
+        this.snackBar.open(string
           'Problem contacting the server – try again',
           'OK',
           // The message will disappear after 3 seconds.
