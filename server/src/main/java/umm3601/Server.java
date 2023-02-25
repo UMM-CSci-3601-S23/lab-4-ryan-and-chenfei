@@ -14,6 +14,7 @@ import io.javalin.Javalin;
 import io.javalin.plugin.bundled.RouteOverviewPlugin;
 import io.javalin.http.InternalServerErrorResponse;
 import umm3601.user.UserController;
+import umm3601.todo.TodoController;
 
 public class Server {
 
@@ -42,6 +43,8 @@ public class Server {
 
     // Initialize dependencies
     UserController userController = new UserController(database);
+    TodoController todoController = new TodoController(database);
+
 
     Javalin server = Javalin.create(config ->
       config.plugins.register(new RouteOverviewPlugin("/api"))
@@ -60,7 +63,7 @@ public class Server {
     Runtime.getRuntime().addShutdownHook(new Thread(server::stop));
 
     server.start(SERVER_PORT);
-
+  //USERs
     // List users, filtered using query parameters
     server.get("/api/users", userController::getUsers);
 
@@ -73,6 +76,20 @@ public class Server {
     // Add new user with the user info being in the JSON body
     // of the HTTP request
     server.post("/api/users", userController::addNewUser);
+
+  //TODOs
+    // List todos, filtered using query parameters
+    server.get("/api/todos", todoController::getTodos);
+
+    // Get the specified todo
+    server.get("/api/todos/{id}", todoController::getTodos);
+
+    // Delete the specified todo
+    server.delete("/api/todos/{id}", todoController::deleteTodo);
+
+    // Add new todo with the todo info being in the JSON body
+    // of the HTTP request
+    server.post("/api/todos", todoController::addNewTodo);
 
     // This catches any uncaught exceptions thrown in the server
     // code and turns them into a 500 response ("Internal Server
@@ -87,4 +104,6 @@ public class Server {
       throw new InternalServerErrorResponse(e.toString());
     });
   }
+
+
 }
