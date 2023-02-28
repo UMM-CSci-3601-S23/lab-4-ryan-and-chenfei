@@ -28,7 +28,6 @@ describe('TodoCardComponent', () => {
       status: true,
       category: 'video games',
       body: 'working hard',
-      avatar: 'https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon'
     };
     fixture.detectChanges();
   });
