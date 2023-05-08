@@ -1,7 +1,0 @@
-<div class="flex-row">
-    <div class="flex-1" fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10"
-      *ngIf="todo; else loading">
-      <app-todo-card [todo]="todo"></app-todo-card>
-    </div>
-  </div>
-  <ng-template #loading>Loading Todo Profile data...</ng-template>
