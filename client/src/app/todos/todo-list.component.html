@@ -61,13 +61,6 @@
         </div>
 
         <br>
-        <div class="flex-row gap-10 flex-wrap">
-          <label>View type: </label>
-          <mat-radio-group aria-label="View type" [(ngModel)]="viewType" data-test="viewTypeRadio">
-            <mat-radio-button value="card">Card</mat-radio-button>
-            <mat-radio-button value="list">List</mat-radio-button>
-          </mat-radio-group>
-        </div>
 
         <button mat-fab class="add-todo-fab" matTooltip="Add Todo" matTooltipPosition="left" routerLink="/todos/new" data-test="addTodoButton">
           <mat-icon class="md-24" aria-label="Add Todo">add</mat-icon>
@@ -94,12 +87,10 @@
           <mat-nav-list class="todo-nav-list">
             <h3 mat-subheader>Todos</h3>
             <a mat-list-item *ngFor="let todo of this.filteredTodos" [routerLink]="['/todos', todo._id]" class="todo-list-item">
-              <!--img matListItemAvatar [src]="user.avatar" *ngIf="this.user.avatar"-->
-              <span matListItemTitle mat-line class="todo-list-owner"> {{todo.owner}} </span>
-              <span matListItemLine class="todo-list-category"> {{todo.category}} </span>
-              <span matListItemLine class="todo-list-body"> {{todo.body}} </span>
-              <span matListItemLine class="todo-list-status"> {{todo.status}} </span>
-
+              <span matListItemTitle class="todo-list-owner">{{todo.owner}}</span>
+              <span matListItemLine class="todo-list-category"><b>Category: </b>{{todo.category}}</span>
+              <span matListItemBody class="todo-list-body"><b>Body: </b>{{todo.body}}</span>
+              <span matListItemLine class="todo-list-status"><b>Completion: </b>{{todo.status}}</span>
             </a>
           </mat-nav-list>
         </mat-card-content>
