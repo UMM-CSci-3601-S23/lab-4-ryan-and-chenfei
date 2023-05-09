@@ -38,27 +38,29 @@ export class TodoService {
    *  from the server after a possibly substantial delay (because we're
    *  contacting a remote server over the Internet).
    */
-  getTodos(filters?: { category?: TodoCategory; status?: boolean; owner?: string; body?: string}): Observable<Todo[]> {
-    // `HttpParams` is essentially just a map used to hold key-value
-    // pairs that are then encoded as "?key1=value1&key2=value2&…" in
-    // the URL when we make the call to `.get()` below.
+  getTodos(filters?: { category?: TodoCategory; status?: boolean; owner?: string;
+    body?: string; sortby?: string; sortdirection?: string;}): Observable<Todo[]> {
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
       if (filters.category) {
         httpParams = httpParams.set('category', filters.category);
       }
-      if (filters.status) {
-       httpParams = httpParams.set('status', filters.status.toString());
-     }
+      if (filters.status !== undefined && filters.status !== null) {
+        httpParams = httpParams.set('status', filters.status.toString());
+      }
       if (filters.owner) {
         httpParams = httpParams.set('owner', filters.owner);
       }
       if (filters.body) {
         httpParams = httpParams.set('body', filters.body);
       }
+      if (filters.sortby) {
+        httpParams = httpParams.set('sortby', filters.sortby);
+      }
+      if (filters.sortdirection) {
+        httpParams = httpParams.set('sortdirection', filters.sortdirection);
+      }
     }
-    // Send the HTTP GET request with the given URL and parameters.
-    // That will return the desired `Observable<User[]>`.
     return this.httpClient.get<Todo[]>(this.todoUrl, {
       params: httpParams,
     });

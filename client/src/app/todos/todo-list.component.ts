@@ -21,8 +21,11 @@ export class TodoListComponent implements OnInit, OnDestroy {
   public todoBody: string;
   public viewType: 'card' | 'list' = 'list';
   public todoMaxResponseLimit: number;
+  public sortDirection: string;
+  public sortField: any;
 
   private ngUnsubscribe = new Subject<void>();
+
 
   constructor(private todoService: TodoService, private snackBar: MatSnackBar) {
 
@@ -33,34 +36,42 @@ export class TodoListComponent implements OnInit, OnDestroy {
    * in the GUI.
    */
   getTodosFromServer(): void {
-    // A todo-list-component is paying attention to todoService.getTodos
-    // (which is an Observable<Todos[]>)
-    // (for more on Observable, see: https://reactivex.io/documentation/observable.html)
-    // and we are specifically watching for role and age whenever the Todo[] gets updated
     this.todoService.getTodos({
       category: this.todoCategory,
-      status: this.todoStatus
+      status: this.todoStatus,
+      sortby: this.sortField,
+      sortdirection: this.sortDirection
     }).pipe(
       takeUntil(this.ngUnsubscribe)
     ).subscribe({
-      // Next time we see a change in the Observable<Todo[]>,
-      // refer to that Todo[] as returnedTodos here and do the steps in the {}
       next: (returnedTodos) => {
-        // First, update the array of serverFilteredTodos to be the Todo[] in the observable
         this.serverFilteredTodos = returnedTodos;
-        // Then update the filters for our client-side filtering as described in this method
         this.updateFilter();
       },
-      // If we observe an error in that Observable, put it in the console so we can learn more
       error: (e) => {
         this.snackBar.open('Problem contacting the server – try again',
           'OK',
-          // The message will disappear after 3 seconds.
           { duration: 3000 });
         console.error('We couldn\'t get the list of todos; the server might be down');
       },
-      // Once the observable has completed successfully
-      // complete: () => console.log('Todos were filtered on the server')
+    });
+  }
+//Functionality for sorting
+  sortTodos(): void {
+    if (!this.sortField) {
+      return;
+    }
+    this.filteredTodos.sort((a, b) => {
+      const valueA = a[this.sortField].toLowerCase();
+      const valueB = b[this.sortField].toLowerCase();
+      const sortOrder = this.sortDirection === 'desc' ? -1 : 1;
+      if (valueA < valueB) {
+        return -1 * sortOrder;
+      }
+      if (valueA > valueB) {
+        return 1 * sortOrder;
+      }
+      return 0;
     });
   }
 
@@ -72,6 +83,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
     this.filteredTodos = this.todoService.filterTodos(
       this.serverFilteredTodos, { limit: this.todoMaxResponseLimit, owner: this.todoOwner, body: this.todoBody,
         category: this.todoCategory});
+    this.sortTodos();
   }
 
   /**

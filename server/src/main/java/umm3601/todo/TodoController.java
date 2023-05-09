@@ -1,5 +1,6 @@
 package umm3601.todo;
 
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -119,9 +120,17 @@ public class TodoController {
 
   private Bson constructSortingOrder(Context ctx) {
     String sortBy = Objects.requireNonNullElse(ctx.queryParam("sortby"), "owner");
-    Bson sortingOrder = Sorts.ascending(sortBy);
+    String sortDirection = Objects.requireNonNullElse(ctx.queryParam("sortdirection"), "asc");
+
+    Bson sortingOrder;
+    if (sortDirection.equalsIgnoreCase("desc")) {
+        sortingOrder = Sorts.descending(sortBy);
+    } else {
+        sortingOrder = Sorts.ascending(sortBy);
+    }
+
     return sortingOrder;
-  }
+}
 
 
   public void addNewTodo(Context ctx) {
