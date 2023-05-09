@@ -90,10 +90,6 @@ export class TodoService {
   filterTodos(todos: Todo[], filters: {limit?: number;owner?: string; body?: string; status?: string; category?: string}): Todo[] {
     let filteredTodos = todos;
 
-    if (filters.limit){
-      filteredTodos = filteredTodos.slice(0, filters.limit);
-    }
-
     if (filters.owner) {
       filters.owner = filters.owner.toLowerCase();
       filteredTodos = filteredTodos.filter(todo => todo.owner.toLowerCase().indexOf(filters.owner) !== -1);
@@ -116,6 +112,11 @@ export class TodoService {
       filters.category= filters.category.toLowerCase();
       filteredTodos = filteredTodos.filter(todo => todo.category.toLowerCase().indexOf(filters.category.toString()) !== -1);
     }
+
+    if (filters.limit){
+      filteredTodos = filteredTodos.slice(0, filters.limit);
+    }
+
     return filteredTodos;
   }
 
