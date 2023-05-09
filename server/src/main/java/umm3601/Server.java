@@ -82,7 +82,7 @@ public class Server {
     server.get("/api/todos", todoController::getTodos);
 
     // Get the specified todo
-    server.get("/api/todos/{id}", todoController::getTodos);
+    server.get("/api/todos/{id}", todoController::getTodo);
 
     // Delete the specified todo
     server.delete("/api/todos/{id}", todoController::deleteTodo);

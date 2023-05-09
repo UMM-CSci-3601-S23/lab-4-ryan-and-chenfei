@@ -3,35 +3,17 @@ package umm3601.todo;
 import org.mongojack.Id;
 import org.mongojack.ObjectId;
 
-// There are two examples of suppressing CheckStyle
-// warnings in this class. If you create new classes
-// that mirror data in the database and that will be managed
-// by Jackson, then you'll probably need to suppress
-// the same warnings in your classes as well so that
-// CheckStyle doesn't shout at you and cause the build
-// to fail.
+// Have to convert properties to an object id to be stored in the database.
 
-// Normally you'd want all fields to be private, but
-// we need the fields in this class to be public since
-// they will be written to by the Jackson library. We
-// need to suppress the Visibility Modifier
-// (https://checkstyle.sourceforge.io/config_design.html#VisibilityModifier)
-// check in CheckStyle so that we don't get a failed
-// build when Gradle runs CheckStyle.
 @SuppressWarnings({"VisibilityModifier"})
 public class Todo {
-  // By default Java field names shouldn't start with underscores.
-  // Here, though, we *have* to use the name `_id` to match the
-  // name of the field in the database.
   @SuppressWarnings({"MemberName"})
   @ObjectId @Id
   public String _id;
-
   public String owner;
-  public String status;
+  public boolean status;
   public String body;
   public String category;
-  public String avatar;
 
   @Override
   public boolean equals(Object obj) {
@@ -44,7 +26,8 @@ public class Todo {
 
   @Override
   public int hashCode() {
-    // This means that equal Todos will hash the same, which is good.
+    // This means that equal Users will hash the same, which is good.
     return _id.hashCode();
   }
+
 }
