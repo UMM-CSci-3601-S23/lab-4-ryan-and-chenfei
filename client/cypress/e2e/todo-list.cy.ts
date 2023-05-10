@@ -49,6 +49,8 @@ describe('Todo list', () => {
     page.getTodoListItems().each($list => {
       cy.wrap($list).find('.todo-list-body').should('contain.text', 'In sunt');
     });
+
+    cy.wait(30000);
   });
 
   it('Should pick a category and check that it has returned the correct elements', () => {
@@ -61,6 +63,7 @@ describe('Todo list', () => {
       cy.wrap($list).find('.todo-list-category').should('contain','homework');
     });
 
+    cy.wait(30000);
   });
 
   it('should pick a status and check that it has returned the correct elements', () => {
