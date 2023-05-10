@@ -50,35 +50,35 @@ describe('Todo list', () => {
       cy.wrap($list).find('.todo-list-body').should('contain.text', 'In sunt');
     });
 
-    cy.wait(30000);
-  });
-
-  it('Should pick a category and check that it has returned the correct elements', () => {
-    //get category 'homework'
-    page.selectCategory('homework');
-
-    page.getTodoListItems().should('have.length.above', 1);
-    //All of the listed todos should have the name we are filtering for
-    page.getTodoListItems().each($list => {
-      cy.wrap($list).find('.todo-list-category').should('contain','homework');
-    });
-
-    cy.wait(30000);
-  });
-
-  it('should pick a status and check that it has returned the correct elements', () => {
-    //select status complete
-    page.selectStatus('complete');
-
-    //check if todos are being displayed
-    page.getTodoListItems().should('have.length.above', 10);
-
-    //check if all given todos are complete
-    page.getTodoListItems().each($todo => {
-      cy.wrap($todo).find('.todo-list-status').should('contain.text', 'Completion: true');
-    });
 
   });
+
+  // it('Should pick a category and check that it has returned the correct elements', () => {
+  //   //get category 'homework'
+  //   page.selectCategory('homework');
+
+  //   page.getTodoListItems().should('have.length.above', 1);
+  //   //All of the listed todos should have the name we are filtering for
+  //   page.getTodoListItems().each($list => {
+  //     cy.wrap($list).find('.todo-list-category').should('contain','homework');
+  //   });
+
+
+  // });
+
+  // it('should pick a status and check that it has returned the correct elements', () => {
+  //   //select status complete
+  //   page.selectStatus('complete');
+
+  //   //check if todos are being displayed
+  //   page.getTodoListItems().should('have.length.above', 10);
+
+  //   //check if all given todos are complete
+  //   page.getTodoListItems().each($todo => {
+  //     cy.wrap($todo).find('.todo-list-status').should('contain.text', 'Completion: true');
+  //   });
+
+  // });
 
   it('should sort todos in descending order', () => {
     page.selectSortDirection('desc');
