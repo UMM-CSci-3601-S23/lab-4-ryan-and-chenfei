@@ -74,6 +74,7 @@ describe('Todo list', () => {
       cy.wrap($todo).find('.todo-list-status').should('contain.text', 'Completion: false');
     });
 
+    cy.wait(1000); // Wait for 1000 milliseconds before continuing
   });
 
   it('should sort todos in descending order', () => {
