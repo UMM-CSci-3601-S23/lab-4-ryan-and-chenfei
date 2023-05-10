@@ -211,12 +211,12 @@ describe('UserService', () => {
       // Call `userService.getUser()` and confirm that the correct call has
       // been made with the correct arguments.
       //
-      // We have to `subscribe()` to the `Observable` returned by `getUserById()`.
+      // We have to `subscribe()` to the `Observable` returned by `getSUserById()`.
       // The `user` argument in the function below is the thing of type User returned by
       // the call to `getUserById()`.
       userService.getUserById(targetId).subscribe((user: User) => {
         // The `User` returned by `getUserById()` should be targetUser.
-        // This `expect` doesn't do a _whole_ lot.
+        // This `expect` doesn't do a _whole_ lot.S
         // This really just confirms that `getUserById()`
         // doesn't in some way modify the user it
         // gets back from the server.

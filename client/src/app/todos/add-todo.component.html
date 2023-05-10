@@ -1,0 +1,69 @@
+<div class="flex-row">
+  <div class="flex-1" fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
+    <form [formGroup]="addTodoForm" (ngSubmit)="submitForm();">
+      <mat-card-header>
+        <mat-card-title class="add-todo-title">New Todo</mat-card-title>
+      </mat-card-header>
+      <mat-form-field>
+        <mat-label>Owner</mat-label>
+        <input matInput placeholder="Owner" formControlName="owner"
+              required>
+        <mat-error *ngFor="let validation of addTodoValidationMessages.owner">
+          <mat-error class="error-message" data-test="nameError"
+                    *ngIf="addTodoForm.get('owner').hasError(validation.type) && (addTodoForm.get('owner').dirty || addTodoForm.get('owner').touched)">
+            {{validation.message}}
+          </mat-error>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Status</mat-label>
+        <mat-select required formControlName ="status">
+        <mat-option value=true>Complete</mat-option>
+        <mat-option value=false>Incomplete</mat-option>
+      </mat-select>
+      <mat-error *ngIf="addTodoForm.get('status').hasError('required')">You must make a selection</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Body</mat-label>
+        <input matInput placeholder="Body" formControlName="body"
+              required>
+        <mat-error *ngFor="let validation of addTodoValidationMessages.body">
+          <mat-error class="error-message" data-test="nameError"
+                    *ngIf="addTodoForm.get('body').hasError(validation.type) && (addTodoForm.get('body').dirty || addTodoForm.get('body').touched)">
+            {{validation.message}}
+          </mat-error>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Category</mat-label>
+        <mat-select required formControlName ="category">
+        <mat-option value="homework">Homework</mat-option>
+        <mat-option value="video games">Video Games</mat-option>
+        <mat-option value="groceries">Groceries</mat-option>
+        <mat-option value="software design">Software Design</mat-option>
+      </mat-select>
+      <mat-error *ngIf="addTodoForm.get('status').hasError('required')">You must make a selection</mat-error>
+      <mat-error *ngIf="addTodoForm.get('category').hasError('pattern') && !addTodoForm.get('category').hasError('required')">
+        Your selection is invalid
+      </mat-error>
+      </mat-form-field>
+
+
+    <mat-card-actions align = "end">
+      <button
+        mat-button
+        type="button"
+        color="primary"
+        [disabled]="!addTodoForm.valid"
+        type="submit"
+        data-test="confirmAddTodoButton"
+      >
+        ADD TODO
+      </button>
+    </mat-card-actions>
+  </form>
+  </div>
+</div>
